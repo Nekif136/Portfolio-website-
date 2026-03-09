@@ -81,6 +81,15 @@ header h3 { font-family: "Space Grotesk"; }
 /* Sidebar active */
 .sidebar.active { left: 0; }
 
+/* ===== Main Content Wrapper ===== */
+.main-content {
+  transition: margin-left 0.3s ease;
+  margin-left: 0;
+}
+.sidebar.active ~ .main-content {
+  margin-left: 250px; /* Push content when sidebar opens */
+}
+
 /* ===== Hero ===== */
 #hero {
   height: 100vh;
@@ -90,7 +99,6 @@ header h3 { font-family: "Space Grotesk"; }
   position: relative;
   text-align: center;
   overflow: hidden;
-  padding-left: 0; /* fixed */
 }
 #hero-content {
   z-index: 2;
@@ -219,13 +227,6 @@ footer{
   padding:30px;
   background:#020617;
 }
-
-/* ===== Responsive ===== */
-@media(min-width: 768px){
-  .sidebar {
-    left: -300px;
-  }
-}
 </style>
 </head>
 
@@ -249,76 +250,79 @@ footer{
   <a href="#contact">Contact</a>
 </div>
 
-<section id="hero">
-  <canvas id="bgCanvas"></canvas>
-  <div id="hero-content" data-aos="fade-up">
-    <h1>Creative Web Developer</h1>
-    <p>Building modern websites with 3D animation and glowing UI</p>
-    <a class="btn" href="#contact">Hire Me</a>
-  </div>
-</section>
+<!-- Main Content Wrapper -->
+<div class="main-content">
+  <section id="hero">
+    <canvas id="bgCanvas"></canvas>
+    <div id="hero-content" data-aos="fade-up">
+      <h1>Creative Web Developer</h1>
+      <p>Building modern websites with 3D animation and glowing UI</p>
+      <a class="btn" href="#contact">Hire Me</a>
+    </div>
+  </section>
 
-<section id="services">
-<h2 data-aos="fade-down">My Services</h2>
-<div class="grid">
-  <div class="card" data-aos="flip-left" data-aos-delay="100">
-    <h3>Business Websites</h3>
-    <p>Professional websites for companies and startups with premium UI.</p>
-  </div>
-  <div class="card" data-aos="flip-left" data-aos-delay="200">
-    <h3>Ecommerce Websites</h3>
-    <p>Online stores with smooth checkout and product management.</p>
-  </div>
-  <div class="card" data-aos="flip-left" data-aos-delay="300">
-    <h3>Portfolio Websites</h3>
-    <p>Modern personal portfolios with 3D animations.</p>
-  </div>
-  <div class="card" data-aos="flip-left" data-aos-delay="400">
-    <h3>Landing Pages</h3>
-    <p>High conversion landing pages for marketing campaigns.</p>
-  </div>
-  <div class="card" data-aos="flip-left" data-aos-delay="500">
-    <h3>SEO Optimization</h3>
-    <p>Improve website ranking on search engines to get more traffic.</p>
-  </div>
+  <section id="services">
+    <h2 data-aos="fade-down">My Services</h2>
+    <div class="grid">
+      <div class="card" data-aos="flip-left" data-aos-delay="100">
+        <h3>Business Websites</h3>
+        <p>Professional websites for companies and startups with premium UI.</p>
+      </div>
+      <div class="card" data-aos="flip-left" data-aos-delay="200">
+        <h3>Ecommerce Websites</h3>
+        <p>Online stores with smooth checkout and product management.</p>
+      </div>
+      <div class="card" data-aos="flip-left" data-aos-delay="300">
+        <h3>Portfolio Websites</h3>
+        <p>Modern personal portfolios with 3D animations.</p>
+      </div>
+      <div class="card" data-aos="flip-left" data-aos-delay="400">
+        <h3>Landing Pages</h3>
+        <p>High conversion landing pages for marketing campaigns.</p>
+      </div>
+      <div class="card" data-aos="flip-left" data-aos-delay="500">
+        <h3>SEO Optimization</h3>
+        <p>Improve website ranking on search engines to get more traffic.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <h2 data-aos="fade-down">My Work</h2>
+    <div class="grid">
+      <div class="card" data-aos="zoom-in" data-aos-delay="100">
+        <h3>Ecommerce Project</h3><p>Full-feature online store.</p>
+      </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="200">
+        <h3>Corporate Website</h3><p>Professional business site with SEO.</p>
+      </div>
+      <div class="card" data-aos="zoom-in" data-aos-delay="300">
+        <h3>Portfolio Website</h3><p>Creative personal portfolio with 3D UI.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <h2 data-aos="fade-down">Client Testimonials</h2>
+    <div id="testimonial-list"></div>
+    <h3>Add Your Feedback</h3>
+    <form id="testimonial-form">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <textarea id="message" placeholder="Your Feedback" required></textarea>
+      <button type="submit">Submit Testimonial</button>
+    </form>
+  </section>
+
+  <section id="contact">
+    <h2 data-aos="fade-down">Contact Me</h2>
+    <form onsubmit="sendEmail();return false;">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
 </div>
-</section>
-
-<section id="work">
-<h2 data-aos="fade-down">My Work</h2>
-<div class="grid">
-  <div class="card" data-aos="zoom-in" data-aos-delay="100">
-    <h3>Ecommerce Project</h3><p>Full-feature online store.</p>
-  </div>
-  <div class="card" data-aos="zoom-in" data-aos-delay="200">
-    <h3>Corporate Website</h3><p>Professional business site with SEO.</p>
-  </div>
-  <div class="card" data-aos="zoom-in" data-aos-delay="300">
-    <h3>Portfolio Website</h3><p>Creative personal portfolio with 3D UI.</p>
-  </div>
-</div>
-</section>
-
-<section id="testimonials">
-<h2 data-aos="fade-down">Client Testimonials</h2>
-<div id="testimonial-list"></div>
-<h3>Add Your Feedback</h3>
-<form id="testimonial-form">
-<input type="text" id="name" placeholder="Your Name" required>
-<textarea id="message" placeholder="Your Feedback" required></textarea>
-<button type="submit">Submit Testimonial</button>
-</form>
-</section>
-
-<section id="contact">
-<h2 data-aos="fade-down">Contact Me</h2>
-<form onsubmit="sendEmail();return false;">
-<input type="text" placeholder="Your Name" required>
-<input type="email" placeholder="Your Email" required>
-<textarea placeholder="Your Message"></textarea>
-<button type="submit">Send Message</button>
-</form>
-</section>
 
 <a class="whatsapp" href="https://wa.me/91XXXXXXXXXX" target="_blank">WhatsApp Chat</a>
 
