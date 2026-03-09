@@ -30,6 +30,7 @@ body {
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 20px 10%;
   background: rgba(0,0,0,0.7);
   position: sticky;
@@ -37,14 +38,47 @@ header {
   z-index: 100;
 }
 header h3 { font-family: "Space Grotesk"; }
-nav a {
+
+/* Hamburger */
+.hamburger {
+  display: block;
+  cursor: pointer;
+  z-index: 110;
+}
+.hamburger div {
+  width: 30px;
+  height: 3px;
+  background: white;
+  margin: 5px 0;
+  transition: 0.4s;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: #1e293b;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  transition: 0.3s;
+  z-index: 105;
+}
+.sidebar a {
   color: white;
-  margin: 0 15px;
   text-decoration: none;
   font-weight: 500;
+  font-size: 18px;
   transition: 0.3s;
 }
-nav a:hover { color: #6366f1; }
+.sidebar a:hover { color: #6366f1; }
+
+/* Sidebar active */
+.sidebar.active { left: 0; }
 
 /* ===== Hero ===== */
 #hero {
@@ -190,14 +224,21 @@ footer{
 
 <header>
   <h3>MyPortfolio</h3>
-  <nav>
-    <a href="#hero">Home</a>
-    <a href="#services">Services</a>
-    <a href="#work">My Work</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <div class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 </header>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <a href="#hero">Home</a>
+  <a href="#services">Services</a>
+  <a href="#work">My Work</a>
+  <a href="#testimonials">Testimonials</a>
+  <a href="#contact">Contact</a>
+</div>
 
 <section id="hero">
   <canvas id="bgCanvas"></canvas>
@@ -280,6 +321,22 @@ footer{
 AOS.init({duration:1000});
 </script>
 
+<!-- Sidebar Script -->
+<script>
+const hamburger = document.getElementById("hamburger");
+const sidebar = document.getElementById("sidebar");
+hamburger.addEventListener("click", () => {
+  sidebar.classList.toggle("active");
+});
+
+// Auto-close sidebar on link click
+document.querySelectorAll(".sidebar a").forEach(link => {
+  link.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+  });
+});
+</script>
+
 <!-- Testimonials -->
 <script>
 const form=document.getElementById("testimonial-form");
@@ -345,4 +402,4 @@ window.addEventListener('resize',()=>{
 </script>
 
 </body>
-  </html>
+</html>
