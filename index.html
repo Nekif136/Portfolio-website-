@@ -5,19 +5,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your Name | Premium 3D Portfolio</title>
-<meta name="description" content="Professional web developer portfolio with 3D animations, glowing UI, scroll animations, and premium design.">
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
 
-<!-- AOS Library for scroll animations -->
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-<!-- Three.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <style>
-/* ===== Body ===== */
+/* ===== Global Styles ===== */
 body {
   margin: 0;
   font-family: Inter, sans-serif;
@@ -26,322 +22,263 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== Header ===== */
+/* ===== Clean Header (No Nav Links) ===== */
 header {
   display: flex;
   justify-content: space-between;
-  padding: 20px 10%;
-  background: rgba(0,0,0,0.7);
-  position: sticky;
+  align-items: center;
+  padding: 15px 5%;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-header h3 { font-family: "Space Grotesk"; }
-nav a {
-  color: white;
-  margin: 0 15px;
-  text-decoration: none;
-  font-weight: 500;
+
+header h3 { 
+  font-family: "Space Grotesk"; 
+  margin: 0;
+  background: linear-gradient(90deg, #6366f1, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Hamburger Icon */
+.hamburger {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
   transition: 0.3s;
 }
-nav a:hover { color: #6366f1; }
 
-/* ===== Hero ===== */
+.hamburger div {
+  width: 30px;
+  height: 3px;
+  background: #6366f1;
+  border-radius: 5px;
+  transition: 0.4s;
+}
+
+/* ===== Premium Sidebar ===== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px; /* Hidden by default */
+  width: 280px;
+  height: 100%;
+  background: #1e293b;
+  padding: 80px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+  z-index: 1100;
+  box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: 0.3s;
+  border-left: 3px solid transparent;
+}
+
+.sidebar a:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: #6366f1;
+  border-left: 3px solid #6366f1;
+  padding-left: 20px;
+}
+
+/* Overlay Background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.4s;
+  z-index: 1050;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===== Main Page Sections ===== */
+section {
+  padding: 100px 10%;
+  min-height: 80vh;
+}
+
 #hero {
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   text-align: center;
-  overflow: hidden;
-}
-#hero-content {
-  z-index: 2;
-}
-#hero h1 {
-  font-size: 50px;
-  font-family: "Space Grotesk";
-  text-shadow: 0 0 20px #6366f1;
-}
-#hero p {
-  margin: 20px 0;
-  font-size: 20px;
-  text-shadow: 0 0 10px #22d3ee;
-}
-.btn {
-  background: #6366f1;
-  padding: 12px 25px;
-  border-radius: 8px;
-  text-decoration: none;
-  color: white;
-  box-shadow: 0 0 20px #6366f1;
-  transition: 0.3s;
-}
-.btn:hover {
-  box-shadow: 0 0 40px #22d3ee;
-  transform: translateY(-3px);
+  position: relative;
 }
 
-/* ===== Canvas ===== */
 #bgCanvas {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: block;
-  z-index: 1;
+  z-index: -1;
 }
 
-/* ===== Sections ===== */
-section {
-  padding: 80px 10%;
-  position: relative;
-  z-index: 1;
-}
-h2 {
-  text-align: center;
-  margin-bottom: 50px;
-  font-size: 36px;
-  color: #22d3ee;
-  text-shadow: 0 0 20px #22d3ee;
+.btn {
+  background: #6366f1;
+  padding: 15px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+  margin-top: 20px;
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
 }
 
-/* ===== Grid ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
 }
 
-/* ===== Cards ===== */
 .card {
   background: #1e293b;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px #6366f1;
-  transition: 0.5s;
-}
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 0 40px #22d3ee;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
-/* ===== Testimonials ===== */
-.testimonial {
-  background:#1e293b;
-  padding:20px;
-  border-radius:10px;
-  margin-bottom:20px;
-  box-shadow: 0 0 20px #6366f1;
-}
-
-/* ===== Forms ===== */
-input,textarea{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border:none;
-  border-radius:6px;
-}
-button{
-  background:#6366f1;
-  color:white;
-  padding:12px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  transition:0.3s;
-}
-button:hover{
-  box-shadow:0 0 20px #22d3ee;
-}
-
-/* ===== WhatsApp ===== */
-.whatsapp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  padding:15px 20px;
-  border-radius:40px;
-  text-decoration:none;
-  color:white;
-  font-weight:bold;
-  box-shadow:0 0 20px #25D366;
-  transition:0.3s;
-}
-.whatsapp:hover{
-  box-shadow:0 0 40px #25D366;
-  transform:translateY(-3px);
-}
-
-/* ===== Footer ===== */
-footer{
-  text-align:center;
-  padding:30px;
-  background:#020617;
-}
+footer { padding: 40px; text-align: center; background: #020617; }
 </style>
 </head>
 
 <body>
 
 <header>
-  <h3>MyPortfolio</h3>
-  <nav>
-    <a href="#hero">Home</a>
-    <a href="#services">Services</a>
-    <a href="#work">My Work</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <h3>PORTFOLIO.</h3>
+  <div class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 </header>
 
-<section id="hero">
-  <canvas id="bgCanvas"></canvas>
-  <div id="hero-content" data-aos="fade-up">
-    <h1>Creative Web Developer</h1>
-    <p>Building modern websites with 3D animation and glowing UI</p>
-    <a class="btn" href="#contact">Hire Me</a>
-  </div>
-</section>
+<nav class="sidebar" id="sidebar">
+  <h2 style="margin-bottom: 30px; font-size: 24px;">Menu</h2>
+  <a href="#hero">Home</a>
+  <a href="#services">Services</a>
+  <a href="#work">Projects</a>
+  <a href="#testimonials">Reviews</a>
+  <a href="#contact">Hire Me</a>
+</nav>
 
-<section id="services">
-<h2 data-aos="fade-down">My Services</h2>
-<div class="grid">
-  <div class="card" data-aos="flip-left" data-aos-delay="100">
-    <h3>Business Websites</h3>
-    <p>Professional websites for companies and startups with premium UI.</p>
-  </div>
-  <div class="card" data-aos="flip-left" data-aos-delay="200">
-    <h3>Ecommerce Websites</h3>
-    <p>Online stores with smooth checkout and product management.</p>
-  </div>
-  <div class="card" data-aos="flip-left" data-aos-delay="300">
-    <h3>Portfolio Websites</h3>
-    <p>Modern personal portfolios with 3D animations.</p>
-  </div>
-  <div class="card" data-aos="flip-left" data-aos-delay="400">
-    <h3>Landing Pages</h3>
-    <p>High conversion landing pages for marketing campaigns.</p>
-  </div>
-  <div class="card" data-aos="flip-left" data-aos-delay="500">
-    <h3>SEO Optimization</h3>
-    <p>Improve website ranking on search engines to get more traffic.</p>
-  </div>
-</div>
-</section>
+<div class="overlay" id="overlay"></div>
 
-<section id="work">
-<h2 data-aos="fade-down">My Work</h2>
-<div class="grid">
-  <div class="card" data-aos="zoom-in" data-aos-delay="100">
-    <h3>Ecommerce Project</h3><p>Full-feature online store.</p>
-  </div>
-  <div class="card" data-aos="zoom-in" data-aos-delay="200">
-    <h3>Corporate Website</h3><p>Professional business site with SEO.</p>
-  </div>
-  <div class="card" data-aos="zoom-in" data-aos-delay="300">
-    <h3>Portfolio Website</h3><p>Creative personal portfolio with 3D UI.</p>
-  </div>
-</div>
-</section>
+<main>
+  <section id="hero">
+    <canvas id="bgCanvas"></canvas>
+    <div data-aos="zoom-out">
+      <h1>Hello, I'm <span style="color: #22d3ee;">Creative Dev</span></h1>
+      <p>Building high-end digital experiences with 3D interactions.</p>
+      <a href="#contact" class="btn">Start a Project</a>
+    </div>
+  </section>
 
-<section id="testimonials">
-<h2 data-aos="fade-down">Client Testimonials</h2>
-<div id="testimonial-list"></div>
-<h3>Add Your Feedback</h3>
-<form id="testimonial-form">
-<input type="text" id="name" placeholder="Your Name" required>
-<textarea id="message" placeholder="Your Feedback" required></textarea>
-<button type="submit">Submit Testimonial</button>
-</form>
-</section>
+  <section id="services">
+    <h2 data-aos="fade-up">Core Services</h2>
+    <div class="grid">
+      <div class="card" data-aos="fade-up" data-aos-delay="100">
+        <h3>Web Design</h3>
+        <p>Modern, responsive, and aesthetically pleasing interfaces.</p>
+      </div>
+      <div class="card" data-aos="fade-up" data-aos-delay="200">
+        <h3>3D Development</h3>
+        <p>Interactive 3D backgrounds and components using Three.js.</p>
+      </div>
+    </div>
+  </section>
 
-<section id="contact">
-<h2 data-aos="fade-down">Contact Me</h2>
-<form onsubmit="sendEmail();return false;">
-<input type="text" placeholder="Your Name" required>
-<input type="email" placeholder="Your Email" required>
-<textarea placeholder="Your Message"></textarea>
-<button type="submit">Send Message</button>
-</form>
-</section>
+  <section id="contact">
+    <h2 data-aos="fade-up">Let's Connect</h2>
+    <p style="text-align: center;">Ready to bring your vision to life? Get in touch.</p>
+  </section>
+</main>
 
-<a class="whatsapp" href="https://wa.me/91XXXXXXXXXX" target="_blank">WhatsApp Chat</a>
+<footer>© 2026 Your Name | All Rights Reserved</footer>
 
-<footer>© 2026 Your Name | Premium Portfolio</footer>
-
-<!-- AOS Animation -->
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-AOS.init({duration:1000});
-</script>
+  AOS.init({ duration: 800, once: true });
 
-<!-- Testimonials -->
-<script>
-const form=document.getElementById("testimonial-form");
-const list=document.getElementById("testimonial-list");
-let testimonials=JSON.parse(localStorage.getItem("testimonials"))||[];
-function displayTestimonials(){
-list.innerHTML="";
-testimonials.forEach(t=>{
-const div=document.createElement("div");
-div.className="testimonial";
-div.innerHTML=`<p>"${t.message}"</p><b>- ${t.name}</b>`;
-list.appendChild(div);
-});
-}
-form.addEventListener("submit",function(e){
-e.preventDefault();
-const name=document.getElementById("name").value;
-const message=document.getElementById("message").value;
-testimonials.push({name,message});
-localStorage.setItem("testimonials",JSON.stringify(testimonials));
-displayTestimonials();
-form.reset();
-});
-displayTestimonials();
-function sendEmail(){alert("Message sent successfully!");}
-</script>
+  const hamburger = document.getElementById("hamburger");
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const links = document.querySelectorAll(".sidebar a");
 
-<!-- 3D Background with Three.js -->
-<script>
-const canvas = document.getElementById("bgCanvas");
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({canvas: canvas, alpha:true});
-renderer.setSize(window.innerWidth, window.innerHeight);
+  // Toggle Function
+  const toggleSidebar = () => {
+    sidebar.classList.toggle("active");
+    overlay.classList.toggle("active");
+  };
 
-camera.position.z = 5;
+  hamburger.addEventListener("click", toggleSidebar);
+  overlay.addEventListener("click", toggleSidebar);
+  
+  // Close sidebar when a link is clicked
+  links.forEach(link => {
+    link.addEventListener("click", toggleSidebar);
+  });
 
-const geometry = new THREE.TorusGeometry(1.5,0.4,16,100);
-const material = new THREE.MeshStandardMaterial({color:0x6366f1, emissive:0x22d3ee, emissiveIntensity:0.5});
-const torus = new THREE.Mesh(geometry, material);
-scene.add(torus);
-
-const light = new THREE.PointLight(0x22d3ee, 2, 100);
-light.position.set(5,5,5);
-scene.add(light);
-
-const ambient = new THREE.AmbientLight(0xffffff,0.2);
-scene.add(ambient);
-
-function animate(){
-  requestAnimationFrame(animate);
-  torus.rotation.x +=0.01;
-  torus.rotation.y +=0.01;
-  renderer.render(scene, camera);
-}
-animate();
-
-window.addEventListener('resize',()=>{
-  camera.aspect = window.innerWidth/window.innerHeight;
-  camera.updateProjectionMatrix();
+  // Basic Three.js Setup
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({canvas: document.getElementById("bgCanvas"), alpha:true, antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
-});
+  camera.position.z = 5;
+
+  const geometry = new THREE.IcosahedronGeometry(2, 1);
+  const material = new THREE.MeshStandardMaterial({color:0x6366f1, wireframe: true});
+  const shape = new THREE.Mesh(geometry, material);
+  scene.add(shape);
+
+  const light = new THREE.PointLight(0xffffff, 1);
+  light.position.set(10, 10, 10);
+  scene.add(light);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    shape.rotation.y += 0.005;
+    shape.rotation.x += 0.005;
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
 </script>
 
 </body>
