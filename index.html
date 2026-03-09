@@ -86,8 +86,12 @@ header h3 { font-family: "Space Grotesk"; }
   transition: margin-left 0.3s ease;
   margin-left: 0;
 }
-.sidebar.active ~ .main-content {
-  margin-left: 250px; /* Push content when sidebar opens */
+
+/* Push content only on desktop */
+@media(min-width: 1024px){
+  .sidebar.active ~ .main-content {
+    margin-left: 250px;
+  }
 }
 
 /* ===== Hero ===== */
@@ -226,6 +230,30 @@ footer{
   text-align:center;
   padding:30px;
   background:#020617;
+}
+
+/* ===== Responsive ===== */
+@media(max-width: 1023px){
+  /* Sidebar slides over content */
+  .sidebar.active ~ .main-content {
+    margin-left: 0;
+  }
+
+  header {
+    padding: 15px 5%;
+  }
+
+  #hero h1 {
+    font-size: 36px;
+  }
+
+  #hero p {
+    font-size: 16px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
@@ -413,4 +441,4 @@ window.addEventListener('resize',()=>{
 </script>
 
 </body>
-</html>
+  </html>
